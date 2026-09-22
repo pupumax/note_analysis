@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>noteコーパス構造分析レポート（2026年3月〜9月）</title>
+    <style>
+        @page { margin: 0; }
+        *, *::before, *::after { box-sizing: border-box; }
+        html, body { margin: 0; padding: 0; }
+        html { background-color: #ffffff; }
+        @media (prefers-color-scheme: dark) {
+            html { background-color: #1f1f1f; }
+        }
+        body { 
+            padding: 24px 0;
+            margin: 0 auto;
+            max-width: 900px !important;
+            border: none !important;
+            background: transparent !important; 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
+            color: #1e293b;
+            line-height: 1.5;
+        }
+        .page {
+            height: 297mm;
+            margin: 0 auto 12px auto;
+            padding: 16mm 18mm 12mm 18mm;
+            background-color: #ffffff;
+            border: 1px solid rgba(0, 0, 0, 0.12);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+        }
+        @media screen and (max-width: 600px) {
+            body { padding: 16px 0; }
+            .page { margin: 0 auto 8px auto; border: none; padding: 12px 20px; }
+        }
+        .page-content {
+            flex: 1 1 0;
+            min-height: 0;
+            overflow: hidden;
+        }
+        .page-footer {
+            flex-shrink: 0;
+            margin-top: auto;
+            padding-top: 3mm;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 8.5pt;
+            color: #64748b;
+        }
+
+        /* Typography & Layout Header */
+        .masthead {
+            border-bottom: 2px solid #0f172a;
+            padding-bottom: 10px;
+            margin-bottom: 16px;
+        }
+        .masthead-tag {
+            font-size: 8.5pt;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #0d9488;
+            margin-bottom: 4px;
+        }
+        .masthead h1 {
+            font-size: 17pt;
+            margin: 0 0 6px 0;
+            color: #0f172a;
+            letter-spacing: -0.02em;
+            line-height: 1.25;
+        }
+        .masthead p {
+            font-size: 9.5pt;
+            color: #475569;
+            margin: 0;
+        }
+        .meta-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 8px 12px;
+            border-radius: 4px;
+            margin-bottom: 16px;
+            font-size: 8.5pt;
+        }
+        .meta-item span {
+            display: block;
+            color: #64748b;
+            font-size: 7.5pt;
+        }
+        .meta-item strong {
+            color: #0f172a;
+        }
+
+        /* Section Styling */
+        h2 {
+            font-size: 11.5pt;
+            color: #0f172a;
+            border-left: 4px solid #0d9488;
+            padding-left: 8px;
+            margin: 14px 0 8px 0;
+            letter-spacing: -0.01em;
+        }
+        p {
+            font-size: 9pt;
+            margin: 0 0 8px 0;
+            color: #334155;
+            text-align: justify;
+        }
+
+        /* Metrics Cards */
+        .metrics-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+        .metric-card {
+            background: #f1f5f9;
+            border-left: 3px solid #0d9488;
+            padding: 8px 10px;
+            border-radius: 0 4px 4px 0;
+        }
+        .metric-card .label {
+            font-size: 8pt;
+            color: #64748b;
+            font-weight: 600;
+        }
+        .metric-card .val {
+            font-size: 14pt;
+            font-weight: 700;
+            color: #0f172a;
+            margin: 2px 0;
+        }
+        .metric-card .sub {
+            font-size: 7.5pt;
+            color: #475569;
+        }
+
+        /* Table Design */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 8.5pt;
+            margin-bottom: 12px;
+        }
+        th, td {
+            padding: 5px 8px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        th {
+            background-color: #f8fafc;
+            color: #334155;
+            font-weight: 700;
+            border-bottom: 2px solid #cbd5e1;
+        }
+        tr:nth-child(even) td {
+            background-color: #fafafa;
+        }
+        .badge {
+            display: inline-block;
+            padding: 1px 6px;
+            border-radius: 3px;
+            font-size: 7.5pt;
+            font-weight: 600;
+        }
+        .badge-purple { background: #f3e8ff; color: #6b21a8; }
+        .badge-teal { background: #ccfbf1; color: #115e59; }
+        .badge-amber { background: #fef3c7; color: #92400e; }
+        .badge-blue { background: #dbeafe; color: #1e40af; }
+
+        /* Callout Box */
+        .callout {
+            background-color: #f8fafc;
+            border: 1px solid #cbd5e1;
+            border-left: 4px solid #3b82f6;
+            padding: 8px 12px;
+            border-radius: 0 4px 4px 0;
+            margin-bottom: 12px;
+            font-size: 8.5pt;
+        }
+        .callout-title {
+            font-weight: 700;
+            color: #1e40af;
+            margin-bottom: 3px;
+        }
+
+        /* Diagram Component */
+        .timeline-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+            margin: 10px 0 14px 0;
+        }
+        .timeline-step {
+            flex: 1;
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-top: 3px solid #0d9488;
+            padding: 8px;
+            border-radius: 4px;
+            font-size: 8pt;
+        }
+        .timeline-step .step-num {
+            font-weight: 700;
+            color: #0d9488;
+            font-size: 7.5pt;
+        }
+        .timeline-step .step-title {
+            font-size: 9pt;
+            font-weight: 700;
+            color: #0f172a;
+            margin: 2px 0 4px 0;
+        }
+
+        @media print {
+            body { padding: 0; background: none; }
+            .page { margin: 0; border: none; height: 297mm; break-after: page; page-break-after: always; }
+            .page:last-child { break-after: auto; page-break-after: auto; }
+        }
+    </style>
+</head>
+<body>
+<div contenteditable="true">
+
+    <!-- PAGE 1 -->
+    <section class="page">
+        <div class="page-content">
+            <header class="masthead">
+                <div class="masthead-tag">Corpus Analysis Summary Report</div>
+                <h1>休職から復職・定着に至るナラティブの変遷</h1>
+                <p>2026年3月〜9月のnoteテキストデータ（全78本）における時系列・構造化分析</p>
+            </header>
+
+            <div class="meta-grid">
+                <div class="meta-item"><span>分析対象データ</span><strong>全159件（2026年: 78件）</strong></div>
+                <div class="meta-item"><span>抽出ジャンル</span><strong>日常・内省・メンタル（72件）</strong></div>
+                <div class="meta-item"><span>分析手法</span><strong>形態素解析 / ノイズ分離 / 語彙推移</strong></div>
+                <div class="meta-item"><span>主要テーマ</span><strong>セラピューティック・ライティングと自己統合</strong></div>
+            </div>
+
+            <div class="metrics-row">
+                <div class="metric-card">
+                    <div class="label">内省記事比率</div>
+                    <div class="val">92.3%</div>
+                    <div class="sub">2026年全78本中 72本が内省・日常</div>
+                </div>
+                <div class="metric-card">
+                    <div class="label">執筆数スパイク</div>
+                    <div class="val">26本 /月</div>
+                    <div class="sub">4月：感情の吐き出し・セルフケア期</div>
+                </div>
+                <div class="metric-card">
+                    <div class="label">最終到達概念</div>
+                    <div class="val">自己取扱説明書</div>
+                    <div class="sub">9月：客観視（メタ認知）の確立</div>
+                </div>
+            </div>
+
+            <h2>1. 定量データにみる月別動向と定性メンタルステート</h2>
+            <p>ノイズとなるリサーチ記事や作品（小説・短歌）を除外し、純粋な「日常・内省・メンタル」記事（72件）に絞って再集計した月別データと、その時期の心の状態の推移です。</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 8%;">月</th>
+                        <th style="width: 10%;">記事数</th>
+                        <th style="width: 14%;">平均文字数</th>
+                        <th style="width: 38%;">主要出現キーワード (回数)</th>
+                        <th style="width: 30%;">フェーズ・メンタルステート</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>3月</strong></td>
+                        <td>9本</td>
+                        <td>1,282字</td>
+                        <td>休職(32), 自分(34), 不安(17), 辛い(32), 泣く</td>
+                        <td><span class="badge badge-purple">ショック・受容期</span> 自責と感情の揺れ</td>
+                    </tr>
+                    <tr>
+                        <td><strong>4月</strong></td>
+                        <td><strong>26本</strong></td>
+                        <td>1,360字</td>
+                        <td>自分(55), 休職(25), 散歩(13), 認知行動療法(6)</td>
+                        <td><span class="badge badge-teal">試行・セルフケア期</span> 行動の記録・吐露</td>
+                    </tr>
+                    <tr>
+                        <td><strong>5月</strong></td>
+                        <td>14本</td>
+                        <td>1,378字</td>
+                        <td>自分(28), 仕事(17), 眠い, 堂々巡り, 泣きっ面に蜂</td>
+                        <td><span class="badge badge-amber">停滞・深層考察期</span> 体調の波の受容</td>
+                    </tr>
+                    <tr>
+                        <td><strong>6月</strong></td>
+                        <td>11本</td>
+                        <td>920字</td>
+                        <td>自分(16), 仕事(12), 復職(8), 在宅, 短歌</td>
+                        <td><span class="badge badge-blue">復帰実況期</span> リアルタイム短文記録</td>
+                    </tr>
+                    <tr>
+                        <td><strong>7月</strong></td>
+                        <td>6本</td>
+                        <td>810字</td>
+                        <td>自分(11), 平均台, 健康, 自由, うごけない</td>
+                        <td><span class="badge badge-blue">バランス模索期</span> 疲労感と休養の選択</td>
+                    </tr>
+                    <tr>
+                        <td><strong>8月</strong></td>
+                        <td>1本</td>
+                        <td>1,765字</td>
+                        <td>自分(4), 仕事(6), 復職丸2ヶ月, お盆</td>
+                        <td><span class="badge badge-teal">定着・節目期</span> 日常化による沈静化</td>
+                    </tr>
+                    <tr>
+                        <td><strong>9月</strong></td>
+                        <td>3本</td>
+                        <td>1,129字</td>
+                        <td>自分(11), 仕事(10), 取扱説明書, 複雑, 疲れ</td>
+                        <td><span class="badge badge-teal">自己統合期</span> メタ認知と取説更新</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>2. ノイズ分離から見えた「知的好奇心」の再開</h2>
+            <div class="callout">
+                <div class="callout-title">重要分析インサイト：5月21日記事『変な窓〜なぜ変わったか〜』（7,901文字）の補正</div>
+                <p>当初、文字数の突出から「深刻な内面の葛藤」と推測されましたが、本文分析により**「建築デザイン・窓の歴史に関するリサーチ・考察記事」**であることが判明しました。このノイズを除外することで、5月の純粋なメンタル記事の平均文字数は1,813字から1,378字へと補正され、実態に即したデータが得られました。</p>
+                <p>またこの事実は、**3〜4月の「内向きのセルフケア」から、5月以降「外部への知的好奇心・没頭」へとエネルギーが戻ってきた重要な回復サイン**としても解釈できます。</p>
+            </div>
+        </div>
+
+        <footer class="page-footer">
+            <span>note Corpus Analysis Report (2026)</span>
+            <span>Page 1 of 2</span>
+        </footer>
+    </section>
+
+    <!-- PAGE 2 -->
+    <section class="page">
+        <div class="page-content">
+            <h2>3. 3段階の心理・行動変変遷モデル</h2>
+            <p>コーパスから抽出された単語群と執筆スタイルの推移に基づき、休職から定着に至るプロセスを3つのフェーズにモデル化しました。</p>
+
+            <div class="timeline-container">
+                <div class="timeline-step">
+                    <div class="step-num">PHASE 1 (3月〜4月)</div>
+                    <div class="step-title">吐き出しとケア（応急手当）</div>
+                    <p>感情やパニックを文章として書き出し、脳のワーキングメモリを空ける「セラピューティック・ライティング」の段階。散歩や認知行動療法の記録が激増。</p>
+                </div>
+                <div class="timeline-step">
+                    <div class="step-num">PHASE 2 (5月〜6月)</div>
+                    <div class="step-title">境界線の再構築（リハビリ）</div>
+                    <p>短歌や短文の日誌を用い、感情と適度な距離（バウンダリー）を置く。「完璧な適応」を目標とせず、在宅勤務などを通じた実験的アプローチ。</p>
+                </div>
+                <div class="timeline-step">
+                    <div class="step-num">PHASE 3 (7月〜9月)</div>
+                    <div class="step-title">自己統合とメタ認知（定着）</div>
+                    <p>仕事のある生活が日常化し執筆頻度が落ち着く。「複雑な自分の取扱説明書を更新し続ける」という主動的・客観的な着地点へ到達。</p>
+                </div>
+            </div>
+
+            <h2>4. 「自分」と「仕事」の概念・関係性の変遷マトリクス</h2>
+            <p>本文中における2大キーフレーズ『自分』『仕事』に対する捉え方、および両者の距離感の変化の比較です。</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 20%;">分析時期</th>
+                        <th style="width: 26%;">「自分」の捉え方</th>
+                        <th style="width: 26%;">「仕事」の捉え方</th>
+                        <th style="width: 28%;">両者の関係性・モデル</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>休職直後<br>（3月）</strong></td>
+                        <td>制御不能で恐ろしく、休んでいることに強い<strong>罪悪感と自責</strong>を抱く存在。</td>
+                        <td>自分を適応障害に追い込んだ<strong>脅威・挫折の象徴</strong>であり、脱落した感覚。</td>
+                        <td><strong>主従・被害関係</strong><br>（仕事の圧力に自分が潰されている状態）</td>
+                    </tr>
+                    <tr>
+                        <td><strong>復職前後<br>（5月〜6月）</strong></td>
+                        <td>限界や曖昧さ（グレーゾーン）を受け入れる<strong>等身大の主体</strong>。</td>
+                        <td>「全か無か」ではなく、環境を整えながら少しずつ慣らす<strong>リハビリ対象</strong>。</td>
+                        <td><strong>実験・条件付き関係</strong><br>（適切な距離感を試行錯誤する状態）</td>
+                    </tr>
+                    <tr>
+                        <td><strong>復職定着<br>（7月〜9月）</strong></td>
+                        <td>「取扱説明書」を必要とする<strong>複雑で疲れやすいシステム</strong>。</td>
+                        <td>人生のすべてではなく、省エネで回す<strong>生活の一部（稼働要素）</strong>。</td>
+                        <td><strong>相互運用関係</strong><br>（取説に沿って乗りこなす状態）</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>5. 結論とインサイト：noteという媒体が果たした機能</h2>
+            <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; padding: 10px 12px; border-radius: 4px; font-size: 8.5pt;">
+                <ul style="margin: 0; padding-left: 16px; color: #334155;">
+                    <li style="margin-bottom: 5px;"><strong>感情の安全な吐き出し口（カタルシス）:</strong> 3〜4月の急激な投稿数の増加は、頭の中の苦痛やパニックを言語化して外部化するための「セルフケア機構」としてnoteが機能していたことを示しています。</li>
+                    <li style="margin-bottom: 5px;"><strong>認知行動の実験場:</strong> タイトルや本文に『認知行動療法』『イライラ対処法』などの具体名が登場し、書くこと自体がメタ認知（客観視）のトレーニングになっていました。</li>
+                    <li style="margin-bottom: 5px;"><strong>表現の多様化によるレジリエンス獲得:</strong> 随筆だけでなく、短歌（6月）、長文リサーチ（5月）、小説（7月）など多角的なアウトプットを試みることで、感情に振り回されないしなやかさを回復しました。</li>
+                    <li><strong>着地点としての「取扱説明書の更新」:</strong> 9月の記述に見られるように、「自分を完璧に変える」のではなく「自分という複雑なシステムをどう扱うか」という構造化へ到達し、持続可能な生活スタイルが確立されました。</li>
+                </ul>
+            </div>
+        </div>
+
+        <footer class="page-footer">
+            <span>note Corpus Analysis Report (2026)</span>
+            <span>Page 2 of 2</span>
+        </footer>
+    </section>
+
+</div>
+</body>
+</html>
+```eof
